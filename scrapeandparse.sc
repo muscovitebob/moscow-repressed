@@ -16,7 +16,7 @@ val tableList = fullDatabase.map(_.select("table").asScala).reduce(_ ++ _)
 val streetAndTable = streetList.zip(tableList)
 val streetAndPeople = streetAndTable.map{case (street, table) => (street.text, table.select(".pers").asScala.map(_.text))}
 
-val shotDateRegex = """.*(\d{1,2}.\d{1,2}.\d{4}).*""".r
+val shotDateRegex = """.*?(\d{1,2}.\d{1,2}.\d{4}).*""".r
 val format = new java.text.SimpleDateFormat("dd.MM.yyyy")
 
 val streetAndPeopleAndDate = streetAndPeople.map{
