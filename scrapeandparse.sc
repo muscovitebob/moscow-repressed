@@ -23,7 +23,7 @@ val streetAndPeopleAndDate = streetAndPeople.map{
 	case (street, people) => (street, people.map(
 		person =>
 			(person, person match {
-				case shotDateRegex(date) => format.parse(date)
+				case shotDateRegex(date) => date
 			}
 			)
 	)
@@ -35,3 +35,11 @@ val streetAndPeopleAndDate = streetAndPeople.map{
 // The years 37-38 correspond to the peak of repression. In total 9975 people exterminated in those two years.
 
 val yezhovschina = streetAndPeopleAndDate.map(x => x._2.filter(y => List(37, 38).contains(y._2.getYear)))
+
+streetAndPeopleAndDate.map {
+	_.productIterator
+		.map(_.toString)
+		.map(_.replaceAll("\\", "\\\\"))
+		.map(_.replaceAll("\"", "\\\""))
+		.mkString("\"", "\",\"", "\"")
+}.mkString("\n")
